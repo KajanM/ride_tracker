@@ -19,8 +19,8 @@ public class RestControllerTest {
 
 		Ride ride = new Ride();
 
-		ride.setName("some ride");
-		ride.setDuration(35);
+		ride.setName("simple jdbc insert ride");
+		ride.setDuration(45);
 
 		restTemplate.put("http://localhost:8080/ride", ride);
 	}
