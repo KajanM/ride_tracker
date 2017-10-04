@@ -50,4 +50,17 @@ public class RestControllerTest {
 
 		System.out.println("Ride name : " + ride.getName());
 	}
+
+	@Test(timeout = 3000)
+	public void testUpdateRide() {
+		RestTemplate restTemplate = new RestTemplate();
+
+		Ride ride = restTemplate.getForObject("http://localhost:8080/ride/2", Ride.class);
+
+		System.out.println("old duration : " + ride.getDuration());
+
+		ride.setDuration(ride.getDuration() + 1);
+
+		restTemplate.put("http://localhost:8080/ride", ride);
+	}
 }
