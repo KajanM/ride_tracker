@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pluralsight.model.Ride;
+import com.pluralsight.repository.util.RideRowMapper;
 
 @Repository("rideRepository")
 public class RideRepositoryImpl implements RideRepository {
@@ -21,15 +22,7 @@ public class RideRepositoryImpl implements RideRepository {
 	@Override
 	public List<Ride> getRides() {
 
-		List<Ride> rides = jdbcTemplate.query("SELECT * FROM ride", (resultSet, i) -> {
-
-			Ride ride = new Ride();
-			ride.setId(resultSet.getInt("id"));
-			ride.setName(resultSet.getString("name"));
-			ride.setDuration(resultSet.getInt("duration"));
-
-			return ride;
-		});
+		List<Ride> rides = jdbcTemplate.query("SELECT * FROM ride", new RideRowMapper());
 		return rides;
 	}
 
