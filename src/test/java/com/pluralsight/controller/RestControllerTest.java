@@ -63,4 +63,11 @@ public class RestControllerTest {
 
 		restTemplate.put("http://localhost:8080/ride", ride);
 	}
+
+	@Test(timeout = 3000)
+	public void testBatchUpdate() {
+		RestTemplate restTemplate = new RestTemplate();
+
+		restTemplate.getForObject("http://localhost:8080/batch", Object.class);
+	}
 }
