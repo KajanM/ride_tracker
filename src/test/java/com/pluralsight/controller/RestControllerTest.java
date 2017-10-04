@@ -19,10 +19,11 @@ public class RestControllerTest {
 
 		Ride ride = new Ride();
 
-		ride.setName("simple jdbc insert ride");
+		ride.setName("simple jdbc insert ride test 5");
 		ride.setDuration(45);
 
-		restTemplate.put("http://localhost:8080/ride", ride);
+		ride = restTemplate.postForObject("http://localhost:8080/ride", ride, Ride.class);
+		System.out.println(ride);
 	}
 
 	@Test(timeout=3000)
