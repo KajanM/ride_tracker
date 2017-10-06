@@ -1,9 +1,12 @@
 package com.pluralsight.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pluralsight.model.Ride;
@@ -15,6 +18,8 @@ public class RideRepositoryImpl implements RideRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	//private NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+
 	@Override
 	public List<Ride> getRides() {
 
@@ -24,14 +29,24 @@ public class RideRepositoryImpl implements RideRepository {
 
 	@Override
 	public Ride createRide(Ride ride) {
-		jdbcTemplate.update("INSERT INTO ride (name, duration) VALUES (?, ?)", ride.getName(), ride.getDuration());
+		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("name", ride.getName());
+		paramMap.put("duration", ride.getDuration());
+
+		namedParameterJdbcTemplate.update("insert into ride (name, duration) values (:name, :duration)", paramMap);
 
 		return null;
 	}
 
 	@Override
 	public Ride getRide(Integer id) {
-		Ride ride = jdbcTemplate.queryForObject("SELECT * FROM ride WHERE id = ?", new RideRowMapper(), id);
+		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		Ride ride = namedParameterJdbcTemplate.queryForObject("select * from ride where id = :id", paramMap, new RideRowMapper());
 		return ride;
 	}
 
@@ -45,11 +60,17 @@ public class RideRepositoryImpl implements RideRepository {
 	@Override
 	public void updateRides(List<Object[]> pairs) {
 		jdbcTemplate.batchUpdate("update ride set ride_date = ? where id = ?", pairs);
+
 	}
 
 	@Override
 	public void deleteRide(Integer id) {
-		jdbcTemplate.update("delete from ride where id = ?", id);
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+
+		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+		namedParameterJdbcTemplate.update("delete from ride where id = :id", paramMap);
 	}
 
 }

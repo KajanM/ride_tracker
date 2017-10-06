@@ -19,7 +19,7 @@ public class RestControllerTest {
 
 		Ride ride = new Ride();
 
-		ride.setName("test ride 6");
+		ride.setName("named parameter test 1");
 		ride.setDuration(35);
 
 		ride = restTemplate.postForObject("http://localhost:8080/ride", ride, Ride.class);
@@ -75,6 +75,6 @@ public class RestControllerTest {
 	public void testDelete() {
 		RestTemplate restTemplate = new RestTemplate();
 
-		restTemplate.delete("http://localhost:8080/delete/14");
+		restTemplate.delete("http://localhost:8080/delete/12");
 	}
 }
