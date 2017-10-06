@@ -18,8 +18,6 @@ public class RideRepositoryImpl implements RideRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	//private NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
-
 	@Override
 	public List<Ride> getRides() {
 
