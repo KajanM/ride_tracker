@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pluralsight.model.Ride;
 import com.pluralsight.service.RideService;
-import com.sun.org.apache.regexp.internal.RE;
 
 @Controller
 public class RideController {
@@ -44,6 +43,12 @@ public class RideController {
 	@RequestMapping(value = "/batch", method = RequestMethod.GET)
 	public @ResponseBody Object batch() {
 		rideService.batch();
+		return null;
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody Object delete(@PathVariable Integer id) {
+		rideService.deleteRide(id);
 		return null;
 	}
 	

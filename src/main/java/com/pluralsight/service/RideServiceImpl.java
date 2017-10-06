@@ -36,6 +36,8 @@ public class RideServiceImpl implements RideService {
 		return rideRepository.updateRide(ride);
 	}
 
+
+
 	@Override
 	public void batch() {
 
@@ -49,6 +51,11 @@ public class RideServiceImpl implements RideService {
 		}
 
 		rideRepository.updateRides(pairs);
+	}
+
+	@Override
+	public void deleteRide(Integer id) {
+		rideRepository.deleteRide(id);
 	}
 
 
